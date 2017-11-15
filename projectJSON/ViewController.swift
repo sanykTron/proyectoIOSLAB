@@ -30,7 +30,7 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let urlString  = "https://api.whitehouse.gov/v1/petitions.json?limit=100"
+        let urlString  = "https://test-c5a4e.firebaseio.com/.json"
         
         if let url = URL(string: urlString)
         {
@@ -38,26 +38,25 @@ class ViewController: UITableViewController {
             {
                 let json = JSON(data: data)
                 
-                if json["metadata"]["responseInfo"]["status"].intValue == 200
-                {
-                    parse(json: json)
-                }
+                
+                parse(json: json)
+                
             }
         }
     }
     
     func parse(json: JSON) {
-        for result in json["results"].arrayValue {
-            let title = result["title"].stringValue
-            let body = result["body"].stringValue
-            let sigs = result["signatureCount"].stringValue
-            let obj = ["title": title, "body": body, "sigs": sigs]
+        for result in json["usuario"].arrayValue {
+            let title = result["nombre"].stringValue
+            let body = result["Descripcion"].stringValue
+            
+            let obj = ["title": title, "body": body]
             petitions.append(obj)
         }
         
         tableView.reloadData()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
